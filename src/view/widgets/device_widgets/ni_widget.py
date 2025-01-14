@@ -253,8 +253,12 @@ class NIWidget(BaseDeviceWidget):
         # TODO: This is haaaaaacky. but might be good for now
         iterable = self.mappedpathGet(self.exposed_branches.copy(), name.split('.'))
         items = []
-        for i, item in enumerate(iterable):
-            key = item if hasattr(iterable, 'keys') else str(i)  # account for yaml typed
+        try : 
+            next(enumerate(iterable))
+        except Exception as e :
+            raise TypeError(f"{iterable} is typed as {type(iterable)}") from e
+        for index, item in enumerate(iterable):
+            key = item if hasattr(iterable, 'keys') else str(index)  # account for yaml typed
             id = f'{name}.{key}'
             if widget := getattr(self, f'{id}_widget', False):
                 item = QTreeWidgetItem(parent, [key])
@@ -294,6 +298,8 @@ class NIWidget(BaseDeviceWidget):
             else:
                 dictionary = self.mappedpathGet(dictionary, ['.'.join(path[0:2]), *path[2:]])
         finally:
+            # if not isinstance(dictionary, dict):
+            #     raise TypeError(f"value {dictionary} for path {path} is not a dictionnary.")
             return dictionary
 
     def check_to_hide(self, name: str, item: QTreeWidgetItem, dictionary: dict=None) -> None:
