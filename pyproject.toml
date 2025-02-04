@@ -15,6 +15,7 @@ readme = "README.md"
 keywords = ["lightsheet", "microscopy", "gui", "widgets"]
 dynamic = ["version"]
 dependencies = [
+    "pyqt5-qt5==5.15.2",
     'qtpy >= 2.2.0',
     'pyqtgraph >= 0.12.4',
     'numpy >= 1.23.5',
@@ -25,12 +26,12 @@ dependencies = [
     'schema >= 0.7.7'
 ]
 
-[project.optional-dependencies]
-"dev" = [
-    "pytest",
-    "black",
-    "isort",
-]
+# [project.optional-dependencies]
+# "dev" = [
+#     "pytest",
+#     "black",
+#     "isort",
+# ]
 
 [project.urls]
 "Homepage" = "https://github.com/AllenNeuralDynamics/view"
