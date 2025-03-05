@@ -6,6 +6,9 @@ from view.widgets.miscellaneous_widgets.q_clickable_label import QClickableLabel
 from typing import Literal, TypedDict
 import inspect
 
+from logging import getLogger
+logger = getLogger(__name__)
+
 # TODO: Use this else where to. Consider moving it so we don't have to copy paste?
 class SignalChangeVar:
     """Class that emits signal containing name when set function is used"""
@@ -280,6 +283,7 @@ class WaveformWidget(PlotWidget):
         :param kwargs: kwargs relating to PlotWidget plot function
         :return: item plotted in graph
         """
+        logger.info("Plotting the waveforms")
         kwargs['pen'] = mkPen(color=kwargs.get('color', 'grey'), width=3)
         item = DraggableGraphItem(pos=pos, waveform=waveform, parameters=parameters, **kwargs)
         item.setData(pos=pos, waveform=waveform, parameters=parameters, **kwargs)

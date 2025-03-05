@@ -44,7 +44,12 @@ from view.widgets.miscellaneous_widgets.q_scrollable_line_edit import QScrollabl
 from view.widgets.miscellaneous_widgets.q_scrollable_float_slider import QScrollableFloatSlider
 from view.widgets.miscellaneous_widgets.q_dock_widget_title_bar import QDockWidgetTitleBar
 import numpy as np
-from typing import Literal, Union, Iterator
+from typing import Literal, Union, Iterator, TYPE_CHECKING
+
+if TYPE_CHECKING :
+    from voxel.instruments.instrument import Instrument
+
+
 
 
 class InstrumentView(QWidget):
@@ -55,7 +60,7 @@ class InstrumentView(QWidget):
 
     def __init__(
         self,
-        instrument,
+        instrument : "Instrument",
         config_path: Path,
         log_level: Literal["NOTSET", "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO",
     ):
@@ -639,8 +644,8 @@ class InstrumentView(QWidget):
                     device_value = getattr(device, k)
                     setattr(widget, k, device_value)
 
-        except (KeyError, TypeError):
-            self.log.warning(f"{attr_name} can't be mapped into device properties")
+        except (KeyError, TypeError) as e:
+            self.log.debug(f"{attr_name} can't be mapped into device properties for device {device} because of {type(e)}-{e}")
             pass
 
     def add_undocked_widgets(self) -> None:

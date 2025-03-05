@@ -290,7 +290,7 @@ class BaseDeviceWidget(QMainWindow):
             schema = getattr(self, f"{name}_schema")
             valid = check_if_valid(schema, value)
             if not valid:
-                self.log.warning(
+                self.log.debug(
                     f"Attribute {name} cannot be set to {value} since it does not adhere to the schema" f" {schema}"
                 )
                 return
