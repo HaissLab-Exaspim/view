@@ -24,11 +24,13 @@ from view.widgets.miscellaneous_widgets.q_scrollable_line_edit import QScrollabl
 from view.widgets.miscellaneous_widgets.q_scrollable_float_slider import QScrollableFloatSlider
 import inspect
 from schema import Schema, SchemaError
-from typing import Literal
+from typing import Literal, Dict
 
 class BaseDeviceWidget(QMainWindow):
     ValueChangedOutside = Signal((str,))
     ValueChangedInside = Signal((str,))
+
+    property_widgets : Dict[str,QWidget]
 
     def __init__(self, device_type: object = None, properties: dict = {}):
         """Base widget for devices like camera, laser, stage, ect. Widget will scan properties of
